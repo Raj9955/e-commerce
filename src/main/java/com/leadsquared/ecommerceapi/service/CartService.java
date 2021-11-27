@@ -32,10 +32,10 @@ public class CartService {
         double totalPrice = (book.getPrice() + (book.getPrice()* Constants.SALES_TAX));
         totalPrice = totalPrice + (totalPrice*Constants.VAT);
 
-/*        if(book.isImported()==true)
+        if(book.isImported()==true)
         {
             totalPrice = totalPrice + (totalPrice*Constants.IMPORT_TAX);
-        }*/
+        }
 
         return totalPrice;
 

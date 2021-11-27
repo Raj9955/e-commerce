@@ -14,7 +14,7 @@ public interface CartApi {
     //TODO need to generate api responce through swagger
 
     @ResponseStatus(value = HttpStatus.ACCEPTED)
-    @PostMapping(value = Constants.REST_API_BOOKS_FULL_PATH,
+    @PostMapping(value = Constants.REST_API_CART_FULL_PATH,
             produces = MediaType.APPLICATION_JSON_VALUE,
             consumes = MediaType.APPLICATION_JSON_VALUE)
     void addCart(@RequestBody Product body) throws Exception;
