@@ -1,5 +1,6 @@
 # e-commerce
 # To build project
-# mvn clean install 
+    - mvn clean install 
 #
-# mvn spring-boot:run
+# To run application
+    - mvn spring-boot:run
