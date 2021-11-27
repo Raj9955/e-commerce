@@ -12,7 +12,6 @@ public class EcommerceApiApplication {
 
 
 	public static void main(String[] args) {
-		logger.info("Rest Api path ======> ",Constants.REST_API_BOOKS_FULL_PATH);
 		SpringApplication.run(EcommerceApiApplication.class, args);
 	}
 

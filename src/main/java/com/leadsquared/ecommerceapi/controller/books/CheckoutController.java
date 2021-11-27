@@ -17,7 +17,7 @@ public class CheckoutController implements CheckoutApi {
 
     @Override
     public CheckoutResponse checkout() {
-        logger.info("checkout controller ");
+        logger.info("Checkout controller ");
         return checkoutService.checkout();
     }
 }

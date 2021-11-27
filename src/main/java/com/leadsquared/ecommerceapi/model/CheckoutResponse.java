@@ -5,21 +5,31 @@ import java.util.List;
 
 public class CheckoutResponse {
 
-    private String created;
+    private String billDate;
 
     //create a different class instead of product to get product price with all texes
     private List<Product> products = new ArrayList<>();
 
     private double discount;
 
-    private int totalPrice;
+    private double totalPrice;
 
-    public String getCreated() {
-        return created;
+    private double payableAmount;
+
+    public double getPayableAmount() {
+        return payableAmount;
     }
 
-    public void setCreated(String created) {
-        this.created = created;
+    public void setPayableAmount(double payableAmount) {
+        this.payableAmount = payableAmount;
+    }
+
+    public String getBillDate() {
+        return billDate;
+    }
+
+    public void setBillDate(String billDate) {
+        this.billDate = billDate;
     }
 
     public List<Product> getProducts() {
@@ -38,11 +48,11 @@ public class CheckoutResponse {
         this.discount = discount;
     }
 
-    public int getTotalPrice() {
+    public double getTotalPrice() {
         return totalPrice;
     }
 
-    public void setTotalPrice(int totalPrice) {
+    public void setTotalPrice(double totalPrice) {
         this.totalPrice = totalPrice;
     }
 }

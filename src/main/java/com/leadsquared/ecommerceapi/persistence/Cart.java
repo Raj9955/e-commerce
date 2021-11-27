@@ -19,6 +19,8 @@ public class Cart {
     private double price;
     @Column(name = "TYPE")
     private String type;
+    @Column(name = "Imported")
+    private boolean imported;
 
     public Cart() {
     }
@@ -63,5 +65,11 @@ public class Cart {
         this.type = type;
     }
 
+    public boolean isImported() {
+        return imported;
+    }
 
+    public void setImported(boolean imported) {
+        this.imported = imported;
+    }
 }

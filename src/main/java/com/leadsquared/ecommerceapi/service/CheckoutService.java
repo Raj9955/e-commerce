@@ -1,18 +1,22 @@
 package com.leadsquared.ecommerceapi.service;
 
+import com.leadsquared.ecommerceapi.Constants;
 import com.leadsquared.ecommerceapi.controller.books.CartController;
-import com.leadsquared.ecommerceapi.model.Book;
 import com.leadsquared.ecommerceapi.model.CheckoutResponse;
 import com.leadsquared.ecommerceapi.model.Product;
 import com.leadsquared.ecommerceapi.persistence.Cart;
-import com.leadsquared.ecommerceapi.repository.BookRepository;
+import com.leadsquared.ecommerceapi.repository.CartRepository;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.text.DecimalFormat;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
+
 
 @Service
 public class CheckoutService {
@@ -23,65 +27,75 @@ public class CheckoutService {
     BookService bookService;
 
     @Autowired
-    private BookRepository bookRepository;
+    private CartRepository cartRepository;
 
     public CheckoutResponse checkout()
     {
-        logger.info("checkout service started");
+        logger.info("Checkout service started");
 
+        DecimalFormat df=new DecimalFormat("#.##");
         double totalPrice=0;
-        //fetch all products from cart table
-        //iterate over it and compute price
 
-        List<Cart> products = bookRepository.findAll();
+        List<Cart> products = cartRepository.findAll();
 
-        logger.info("number of elements : {}",products.size());
+        logger.info("number of items present in Cart : {}",products.size());
         CheckoutResponse checkoutResponse = new CheckoutResponse();
 
         ArrayList<Product> productList = new ArrayList<Product>();
         for(Cart product:products)
         {
-            logger.info("product name {} has price {}",product.getName(),product.getPrice());
+            logger.info("product name {} -  price {}",product.getName(),product.getPrice());
             Product p = new Product();
             if("book".equalsIgnoreCase(product.getType()))
             {
-                double bookPrice = bookService.computTotalBookPrice(product);
-                totalPrice += bookPrice;
+                double finalPrice = bookService.computFinalPriceAfterTax(product);
+                totalPrice += finalPrice;
 
                 p.setId(product.getId());
                 p.setName(product.getName());
                 p.setDescription(product.getDescription());
-                p.setPrice(bookPrice);
+                p.setPrice(finalPrice);
                 p.setType(product.getType());
 
                 productList.add(p);
-                logger.info("product name {} Final price {}",product.getName(),bookPrice);
+                logger.info("product name {} Final price {}",product.getName(),finalPrice);
             }
         }
 
-        logger.info("buying {} elements",productList.size());
+        logger.info("Checkout items {} ",productList.size());
         checkoutResponse.setProducts(productList);
+        checkoutResponse.setTotalPrice(Double.parseDouble(df.format(totalPrice)));
 
 
-        //create seperate method for discounts
-        double discountAmount=0;
-        if(totalPrice >= 1500)
-        {
-            discountAmount = (totalPrice*0.05);
-        }
-        else if(totalPrice >= 2000)
-        {
-            discountAmount = (totalPrice*0.1);
+        double discountAmount = discount(totalPrice);
+        checkoutResponse.setDiscount(Double.parseDouble(df.format(discountAmount)));
 
-        }
+        double payableAmount=Math.ceil(totalPrice-discountAmount);
 
-        checkoutResponse.setDiscount(discountAmount);
+        checkoutResponse.setPayableAmount(Double.parseDouble(df.format(payableAmount)));
 
-        int payableAmount=(int)Math.ceil(totalPrice-discountAmount);
+        SimpleDateFormat formatter = new SimpleDateFormat("dd/MM/yyyy HH:mm:ss");
+        Date date = new Date();
 
-        checkoutResponse.setTotalPrice(payableAmount);
+        checkoutResponse.setBillDate(formatter.format(date));
 
         return checkoutResponse;
 
+    }
+
+    private double discount(double totalPrice)
+    {
+        double discountAmount=0;
+
+        if(totalPrice >= Constants.DISCOUNTABLE_AMOUNT1)
+        {
+            discountAmount = (totalPrice*Constants.AVAILABLE_DISCOUNT1);
+        }
+        else if(totalPrice >= Constants.DISCOUNTABLE_AMOUNT2)
+        {
+            discountAmount = (totalPrice*Constants.AVAILABLE_DISCOUNT2);
+
+        }
+        return discountAmount;
     }
 }

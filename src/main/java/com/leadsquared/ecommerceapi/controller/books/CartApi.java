@@ -2,6 +2,7 @@ package com.leadsquared.ecommerceapi.controller.books;
 
 import com.leadsquared.ecommerceapi.Constants;
 import com.leadsquared.ecommerceapi.model.Book;
+import com.leadsquared.ecommerceapi.model.Product;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -16,11 +17,7 @@ public interface CartApi {
     @PostMapping(value = Constants.REST_API_BOOKS_FULL_PATH,
             produces = MediaType.APPLICATION_JSON_VALUE,
             consumes = MediaType.APPLICATION_JSON_VALUE)
-    void addCart(@RequestBody Book body) throws Exception;
+    void addCart(@RequestBody Product body) throws Exception;
 
-
-/*    void getCart();
-    void getAllCart();
-    void deleteCart();*/
 
 }

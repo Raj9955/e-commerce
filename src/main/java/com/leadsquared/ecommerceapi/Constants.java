@@ -20,5 +20,11 @@ public class Constants {
     public static double VAT=0.04;
     public static double IMPORT_TAX=0.05;
 
+    public static int DISCOUNTABLE_AMOUNT1=1500;
+    public static double AVAILABLE_DISCOUNT1=0.05;
+    public static int DISCOUNTABLE_AMOUNT2=2000;
+    public static double AVAILABLE_DISCOUNT2=0.1;
+
+
 
 }
