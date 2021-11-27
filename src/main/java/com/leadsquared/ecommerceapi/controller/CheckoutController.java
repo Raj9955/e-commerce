@@ -1,4 +1,4 @@
-package com.leadsquared.ecommerceapi.controller.books;
+package com.leadsquared.ecommerceapi.controller;
 
 import com.leadsquared.ecommerceapi.model.CheckoutResponse;
 import com.leadsquared.ecommerceapi.service.CheckoutService;

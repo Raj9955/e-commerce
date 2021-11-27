@@ -1,7 +1,7 @@
 package com.leadsquared.ecommerceapi.service;
 
 import com.leadsquared.ecommerceapi.Constants;
-import com.leadsquared.ecommerceapi.controller.books.CartController;
+import com.leadsquared.ecommerceapi.controller.CartController;
 import com.leadsquared.ecommerceapi.model.CheckoutResponse;
 import com.leadsquared.ecommerceapi.model.Product;
 import com.leadsquared.ecommerceapi.persistence.Cart;
